@@ -1,0 +1,10 @@
+.profile__edit-button {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  max-width: 24px;
+  max-height: 24px;
+  width: 100%;
+  align-self: center;
+  border: 1px solid #fff;
+}
