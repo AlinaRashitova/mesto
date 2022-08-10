@@ -1,3 +1,10 @@
+.button {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  appearance: none;
+}
+
 .button:hover {
   opacity: .5;
   cursor: pointer;
