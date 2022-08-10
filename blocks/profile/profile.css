@@ -1,16 +1,23 @@
 .profile {
-  margin: 0 auto;
-  padding: 37px 0 0;
-  max-width: 880px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 160px auto auto;
+  margin: 0;
+  padding: 38px 19px 0;
+  box-sizing: border-box;
 
+  display: flex;
+  flex-direction: column;
 }
 
-@media screen and (max-width: 320px) {
-  .profile {
 
+@media screen and (min-width: 768px) {
+  .profile {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 36px 0 47px;
+    flex-direction: row;
+    gap: 30px;
   }
 }
+
+
+
 
