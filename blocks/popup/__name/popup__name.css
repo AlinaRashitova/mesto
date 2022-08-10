@@ -2,7 +2,6 @@
   margin: 0 0 30px;
   padding: 0;
   border: none;
-  border-bottom: 1px solid #000;
-  opacity: .2;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
   color: #000;
 }

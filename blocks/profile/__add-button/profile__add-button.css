@@ -7,16 +7,20 @@
   background-size: 16px;
   max-width: 282px;
   width: 100%;
-  padding: 17px 132px;
-  margin: auto;
+  padding: 23px 132px;
+  margin: 0;
+  justify-self: center;
+  align-self: center;
+  grid-area: addButton;
+  box-sizing: border-box;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 600px) {
   .profile__add-button {
     max-width: 150px;
     max-height: 50px;
     background-size: 22px;
-    padding: 14px 64px;
+    padding: 23px 64px;
   }
 }
 

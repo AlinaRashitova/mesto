@@ -1,21 +1,24 @@
 .profile {
   margin: 0;
   padding: 38px 19px 0;
+  max-width: 320px;
+  width: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "avatar"
+    "info"
+    "addButton";
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 600px) {
   .profile {
     max-width: 880px;
     margin: 0 auto;
     padding: 36px 0 47px;
-    flex-direction: row;
-    gap: 30px;
+    grid-template-columns: 160px 1fr 1fr;
+    grid-template-areas:
+      "avatar info addButton";
   }
 }
-
-
-
-
