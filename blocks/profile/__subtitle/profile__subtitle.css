@@ -4,17 +4,20 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  justify-self: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  justify-self: center;
-  align-self: center;
+  max-width: 282px;
+  width: 100%;
+  text-align: center;
 }
 
 @media screen and (min-width: 768px) {
   .profile__subtitle {
+    max-width: 336px;
     font-size: 18px;
     line-height: 22px;
-    align-self: flex-start;
+    text-align: start;
   }
 }

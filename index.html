@@ -13,7 +13,7 @@
     <header class="header">
       <img src="./images/logo.svg" alt="Логотип" class="header__logo">
     </header>
-    <section class="profile">
+    <section class="profile" aria-label="profile">
       <img src="./images/avatar.png" alt="Жак-Ив Кусто" class="profile__avatar">
       <div class="profile__info">
         <div class="profile__info-edit">
@@ -24,7 +24,7 @@
       </div>
       <button type="button" class="profile__add-button button"></button>
     </section>
-    <section class="cards">
+    <section class="cards" aria-label="cards">
       <article class="card">
         <img src="./images/karachaevsk.png" alt="Карачаевск" class="card__image">
         <div class="card__info">
@@ -72,16 +72,16 @@
       <p class="footer__copyright">&COPY; 2022 Mesto Russia</p>
     </footer>
   </div>
-  <section class="popup popup_opened">
+  <section class="popup popup_opened" aria-label="popup">
     <div class="popup__container">
-      <img src="./images/close-icon.svg" alt="Кнопка закрытия" class="popup__close-icon">
+      <img src="./images/close-icon.svg" alt="Кнопка закрытия" class="popup__close-icon button">
       <div class="popup__content">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form">
-          <input type="text" value="Жак-Ив Кусто" class="popup__name">
-          <input type="text" value="Исследователь океана" class="popup__job">
+          <input type="text" placeholder="Имя" class="popup__name">
+          <input type="text" placeholder="О себе" class="popup__job">
+          <button type="submit" class="popup__save-button">Сохранить</button>
         </form>
-        <button type="submit" class="popup__save-button button">Сохранить</button>
       </div>
     </div>
   </section>
