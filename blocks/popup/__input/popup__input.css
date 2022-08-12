@@ -5,7 +5,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding: 0;
+  padding: 0 0 9px;
   max-width: 238px;
   width: 100%;
   font-weight: 400;

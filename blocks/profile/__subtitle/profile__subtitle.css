@@ -8,9 +8,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 282px;
+  max-width: 160px;
   width: 100%;
-  text-align: center;
+  align-self: center;
 }
 
 @media screen and (min-width: 600px) {
