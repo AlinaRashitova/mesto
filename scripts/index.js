@@ -128,7 +128,7 @@ function addCard(object) {
   newItemElement.querySelector('.card__title').textContent = object.name;
   newItemElement.querySelector('.card__image').src = object.link;
 
-  /*deleteButton.addEventListener('click', deleteHandle);*/
+  deleteButton.addEventListener('click', deleteHandle);
 
   likeButton.addEventListener('click', likeHandle);
 
