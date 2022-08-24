@@ -9,5 +9,6 @@
   color: #000;
   border-radius: 10px;
   box-sizing: border-box;
+  position: relative;
 }
 
