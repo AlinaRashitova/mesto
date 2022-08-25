@@ -16,8 +16,6 @@ const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
 const cardElement = document.querySelector('.cards');
 const templateElement = document.querySelector('.template');
-const cardTitle = templateElement.querySelector('.card__title');
-const cardImage = templateElement.querySelector('.card__image');
 
 const initialCards = [
   {
@@ -46,7 +44,7 @@ const initialCards = [
   }
 ];
 
-//Функция добавления значений в инпуты
+//Функция добавления значений в инпуты, попап редактирования
 function popupFormValue() {
   nameInput.setAttribute('value', profileName.textContent);
   jobInput.setAttribute('value', profileJob.textContent);
@@ -94,20 +92,38 @@ function editFormSubmitHandler(evt) {
   closeEditPopup();
 }
 
-//Функция добавления карточки пользователем
-function addFormSubmitHandler(evt) {
-  evt.preventDefault();
-  cardTitle.textContent = placeNameInput.value;
-  cardImage.src = imageSourceInput.value;
-
-  closeAddPopup();
-}
-
 //Обработчик кнопки Сохранить
 popupFormEdit.addEventListener('submit', editFormSubmitHandler);
 
+//Функция добавления новой карточки пользователем
+function addFormSubmitHandler(evt) {
+  evt.preventDefault();
+  const title = placeNameInput.value;
+  const image = imageSourceInput.value;
+  addCard(title, image);
+  closeAddPopup();
+}
+
 //Обработчик кнопки Добавить
 popupFormAdd.addEventListener('submit', addFormSubmitHandler);
+
+//Функция добавления карточки
+function addCard(name, link) {
+  const newItemElement = templateElement.content.cloneNode(true);
+  const likeButton = newItemElement.querySelector('.card__like-button');
+  const deleteButton = newItemElement.querySelector('.card__delete-button');
+  newItemElement.querySelector('.card__title').textContent = name;
+  newItemElement.querySelector('.card__image').src = link;
+
+  deleteButton.addEventListener('click', deleteHandle);
+
+  likeButton.addEventListener('click', likeHandle);
+
+  cardElement.prepend(newItemElement);
+}
+
+initialCards.forEach(element => addCard(element.name, element.link));
+
 
 //Функция лайка карточки
 function likeHandle(evt) {
@@ -120,21 +136,3 @@ function deleteHandle(evt) {
   const element = evt.target.closest('.card');
   element.remove();
 }
-
-function addCard(object) {
-  const newItemElement = templateElement.content.cloneNode(true);
-  const likeButton = newItemElement.querySelector('.card__like-button');
-  const deleteButton = newItemElement.querySelector('.card__delete-button');
-  newItemElement.querySelector('.card__title').textContent = object.name;
-  newItemElement.querySelector('.card__image').src = object.link;
-
-  deleteButton.addEventListener('click', deleteHandle);
-
-  likeButton.addEventListener('click', likeHandle);
-
-  cardElement.prepend(newItemElement);
-}
-
-initialCards.forEach(addCard);
-
-
