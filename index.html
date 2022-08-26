@@ -63,11 +63,21 @@
     </div>
   </section>
 
+  <section class="popup popup_type_photo" aria-label="popup">
+    <div class="popup__container popup__container_photo">
+      <button aria-label="closeButton" type="button" class="popup__close-button button"></button>
+      <figure class="popup__figure">
+        <img alt="Картинка" class="popup__image">
+        <figcaption class="popup__caption"></figcaption>
+      </figure>
+    </div>
+  </section>
+
 
   <template class="template">
     <article class="card">
       <button aria-label="deleteButton" type="button" class="card__delete-button button"></button>
-      <img alt="Картинка" class="card__image">
+      <img class="card__image">
       <div class="card__info">
         <h2 class="card__title"></h2>
         <button aria-label="likeButton" type="button" class="card__like-button"></button>
