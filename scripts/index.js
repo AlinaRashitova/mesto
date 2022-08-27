@@ -93,7 +93,7 @@ function addFormSubmitHandler(evt) {
     name: title,
     link: image
   }
-  createCard(objectCard);
+  cardElement.prepend(createCard(objectCard));
   closeAddPopup();
   popupFormAdd.reset();
 }
