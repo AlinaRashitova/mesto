@@ -14,6 +14,7 @@ function hideInputError(formElement, inputElement, config) {
   errorElement.textContent = '';
 }
 
+// Функция проверки формы на валидность
 function checkInputValidity(formElement, inputElement, config) {
   if (inputElement.validity.valid) {
     hideInputError(formElement, inputElement, config);
@@ -38,13 +39,14 @@ function toggleButtonState(inputList, buttonElement, config) {
   }
 }
 
+// Функция добавления слушателя событий всем инпутам формы
 function setEventListeners(formElement, config) {
   // создаем массив из инпутов формы
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  // изменяем класс кнопки в зависимости от валидности формы
+  // делаем кнопку неактивной до ввода данных
   toggleButtonState(inputList, buttonElement, config);
-  // проверяем каждый инпут на валидность и меняем кнопку в зависимости от результата
+  // проверяем каждый инпут на валидность и меняем состояние кнопки в зависимости от результата
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, config);
@@ -53,6 +55,7 @@ function setEventListeners(formElement, config) {
   });
 }
 
+// Функция нахождения всех форм
 function enableValidation(config) {
   // создаем массив форм
   const formList = Array.from(document.querySelectorAll(config.formSelector));
