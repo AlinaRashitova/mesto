@@ -1,7 +1,7 @@
-.profile__add-button {
+.profile__button_add {
   border: 2px solid #fff;
   background-color: transparent;
-  background-image: url(../../../images/add-button.svg);
+  background-image: url(../../../../images/add-button.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 16px;
@@ -16,13 +16,12 @@
   border-radius: 2px;
 }
 
-@media screen and (min-width: 600px) {
-  .profile__add-button {
-    max-width: 150px;
-    max-height: 50px;
-    background-size: 22px;
-    padding: 23px 64px;
-    justify-self: flex-end;
+  @media screen and (min-width: 600px) {
+    .profile__button_add {
+      max-width: 150px;
+      max-height: 50px;
+      background-size: 22px;
+      padding: 23px 64px;
+      justify-self: flex-end;
+    }
   }
-}
-

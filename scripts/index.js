@@ -4,11 +4,11 @@ const addPopup = document.querySelector('.popup_type_add');
 const photoPopup = document.querySelector('.popup_type_photo');
 
 // Кнопки
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button');
-const editCloseButton = editPopup.querySelector('.popup__close-button');
-const addCloseButton = addPopup.querySelector('.popup__close-button');
-const photoCloseButton = photoPopup.querySelector('.popup__close-button');
+const editButton = document.querySelector('.profile__button_edit');
+const addButton = document.querySelector('.profile__button_add');
+const editCloseButton = editPopup.querySelector('.popup__button_close');
+const addCloseButton = addPopup.querySelector('.popup__button_close');
+const photoCloseButton = photoPopup.querySelector('.popup__button_close');
 
 // Формы
 const popupFormEdit = editPopup.querySelector('.popup__form_type_edit');
@@ -28,6 +28,15 @@ const templateElement = document.querySelector('.template');
 const popupImage = photoPopup.querySelector('.popup__image');
 const popupCaption = photoPopup.querySelector('.popup__caption');
 
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'error_visible'
+}
+
 // Функция добавления значений в инпуты, попап редактирования
 function addPopupFormValue() {
   nameInput.setAttribute('value', profileName.textContent);
@@ -37,6 +46,12 @@ function addPopupFormValue() {
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === "Escape") {
+      closePopup(popup);
+    }
+  })
 }
 
 function clickEditHandler() {
@@ -65,13 +80,25 @@ function closePhotoPopup() {
   closePopup(photoPopup);
 }
 
-// Обработчики событий для кнопок
+// Обработчики событий на кнопки
 editButton.addEventListener('click', clickEditHandler);
 addButton.addEventListener('click', clickAddHandler);
 
 editCloseButton.addEventListener('click', closeEditPopup);
 addCloseButton.addEventListener('click', closeAddPopup);
 photoCloseButton.addEventListener('click', closePhotoPopup);
+
+// Обработчики событий на попап
+editPopup.addEventListener('click', closeOverlay);
+addPopup.addEventListener('click', closeOverlay);
+photoPopup.addEventListener('click', closeOverlay);
+
+// Функция закрытия попапа кликом на оверлей
+function closeOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup(evt.target);
+  }
+}
 
 // Функция редактирования профиля
 function editFormSubmitHandler(evt) {
@@ -104,8 +131,8 @@ popupFormAdd.addEventListener('submit', addFormSubmitHandler);
 // Функция создания карточки
 function createCard(object) {
   const newItemElement = templateElement.content.cloneNode(true);
-  const likeButton = newItemElement.querySelector('.card__like-button');
-  const deleteButton = newItemElement.querySelector('.card__delete-button');
+  const likeButton = newItemElement.querySelector('.card__button_like');
+  const deleteButton = newItemElement.querySelector('.card__button_delete');
   const cardImage = newItemElement.querySelector('.card__image');
   newItemElement.querySelector('.card__title').textContent = object.name;
   newItemElement.querySelector('.card__image').src = object.link;
@@ -118,16 +145,9 @@ function createCard(object) {
   return newItemElement;
 }
 
-// Функция добавления карточки
-function renderCards() {
-  initialCards.forEach(element => {
-    cardElement.prepend(createCard(element));
-  });
-}
-
 // Функция лайка карточки
 function likeHandle(evt, likeButton) {
-  likeButton.classList.toggle('card__like-button_active');
+  likeButton.classList.toggle('card__button_like_active');
 }
 
 // Функция удаления карточки
@@ -135,6 +155,15 @@ function deleteHandle(evt) {
   const element = evt.target.closest('.card');
   element.remove();
 }
+
+// Функция добавления карточки
+function renderCards() {
+  initialCards.forEach(element => {
+    cardElement.prepend(createCard(element));
+  });
+}
+
+renderCards();
 
 // Функция открытия попапа с картинкой
 function photoHandle(evt, link, name) {
@@ -144,4 +173,4 @@ function photoHandle(evt, link, name) {
   popupCaption.textContent = name;
 }
 
-renderCards();
+

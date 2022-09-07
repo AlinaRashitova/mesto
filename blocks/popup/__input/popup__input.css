@@ -5,7 +5,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding: 0 0 9px;
+  padding: 10px 0 9px;
   max-width: 238px;
   width: 100%;
   font-weight: 400;
@@ -14,7 +14,7 @@
 }
 
 .popup__input:first-child {
-  margin: 0 0 30px;
+  margin: 0 0 5px;
 }
 
 @media screen and (min-width: 768px) {
