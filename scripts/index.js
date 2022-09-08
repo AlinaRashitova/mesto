@@ -1,18 +1,20 @@
+// Объявление переменных
+
 // Попапы
-const editPopup = document.querySelector('.popup_type_edit');
-const addPopup = document.querySelector('.popup_type_add');
-const photoPopup = document.querySelector('.popup_type_photo');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAdd = document.querySelector('.popup_type_add');
+const popupPhoto = document.querySelector('.popup_type_photo');
 
 // Кнопки
-const editButton = document.querySelector('.profile__button_edit');
-const addButton = document.querySelector('.profile__button_add');
-const editCloseButton = editPopup.querySelector('.popup__button_close');
-const addCloseButton = addPopup.querySelector('.popup__button_close');
-const photoCloseButton = photoPopup.querySelector('.popup__button_close');
+const buttonEdit = document.querySelector('.profile__button_edit');
+const buttonAdd = document.querySelector('.profile__button_add');
+const buttonEditClose = popupEdit.querySelector('.popup__button_close');
+const buttonAddClose = popupAdd.querySelector('.popup__button_close');
+const buttonPhotoClose = popupPhoto.querySelector('.popup__button_close');
 
 // Формы
-const popupFormEdit = editPopup.querySelector('.popup__form_type_edit');
-const popupFormAdd = addPopup.querySelector('.popup__form_type_add');
+const popupFormEdit = popupEdit.querySelector('.popup__form_type_edit');
+const popupFormAdd = popupAdd.querySelector('.popup__form_type_add');
 
 // Инпуты
 const nameInput = popupFormEdit.querySelector('.popup__input_type_name');
@@ -25,8 +27,8 @@ const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
 const cardElement = document.querySelector('.cards');
 const templateElement = document.querySelector('.template');
-const popupImage = photoPopup.querySelector('.popup__image');
-const popupCaption = photoPopup.querySelector('.popup__caption');
+const popupImage = popupPhoto.querySelector('.popup__image');
+const popupCaption = popupPhoto.querySelector('.popup__caption');
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -37,6 +39,8 @@ const validationConfig = {
   errorClass: 'error_visible'
 }
 
+// Объявление функций
+
 // Функция добавления значений в инпуты, попап редактирования
 function addPopupFormValue() {
   nameInput.setAttribute('value', profileName.textContent);
@@ -46,55 +50,48 @@ function addPopupFormValue() {
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === "Escape") {
-      closePopup(popup);
-    }
-  })
+  document.addEventListener('keydown', handleCloseByEscape);
+  popup.addEventListener('click', handleCloseByOverlay);
 }
 
-function clickEditHandler() {
+function handleEditFormClick() {
   addPopupFormValue();
-  openPopup(editPopup);
+  openPopup(popupEdit);
 }
 
-function clickAddHandler() {
-  openPopup(addPopup);
+function handleAddFormClick() {
+  openPopup(popupAdd);
 }
 
 // Функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleCloseByEscape);
+  popup.removeEventListener('click', handleCloseByOverlay);
 }
 
 function closeEditPopup() {
-  closePopup(editPopup);
+  closePopup(popupEdit);
 }
 
 function closeAddPopup() {
-  closePopup(addPopup);
+  closePopup(popupAdd);
 }
 
 function closePhotoPopup() {
-  closePopup(photoPopup);
+  closePopup(popupPhoto);
 }
 
-// Обработчики событий на кнопки
-editButton.addEventListener('click', clickEditHandler);
-addButton.addEventListener('click', clickAddHandler);
-
-editCloseButton.addEventListener('click', closeEditPopup);
-addCloseButton.addEventListener('click', closeAddPopup);
-photoCloseButton.addEventListener('click', closePhotoPopup);
-
-// Обработчики событий на попап
-editPopup.addEventListener('click', closeOverlay);
-addPopup.addEventListener('click', closeOverlay);
-photoPopup.addEventListener('click', closeOverlay);
+// Функция закрытия попапа через Esc
+function handleCloseByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
 
 // Функция закрытия попапа кликом на оверлей
-function closeOverlay(evt) {
+function handleCloseByOverlay(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
   }
@@ -107,9 +104,6 @@ function editFormSubmitHandler(evt) {
   profileJob.textContent = jobInput.value;
   closeEditPopup();
 }
-
-// Обработчик кнопки Сохранить
-popupFormEdit.addEventListener('submit', editFormSubmitHandler);
 
 // Функция добавления новой карточки пользователем
 function addFormSubmitHandler(evt) {
@@ -125,9 +119,6 @@ function addFormSubmitHandler(evt) {
   popupFormAdd.reset();
 }
 
-// Обработчик кнопки Добавить
-popupFormAdd.addEventListener('submit', addFormSubmitHandler);
-
 // Функция создания карточки
 function createCard(object) {
   const newItemElement = templateElement.content.cloneNode(true);
@@ -140,7 +131,7 @@ function createCard(object) {
 
   deleteButton.addEventListener('click', deleteHandle);
   likeButton.addEventListener('click', evt => likeHandle(evt, likeButton));
-  cardImage.addEventListener('click', evt => photoHandle(evt, object.link, object.name));
+  cardImage.addEventListener('click', evt => openPhotoHandle(evt, object.link, object.name));
 
   return newItemElement;
 }
@@ -163,14 +154,28 @@ function renderCards() {
   });
 }
 
-renderCards();
-
 // Функция открытия попапа с картинкой
-function photoHandle(evt, link, name) {
-  openPopup(photoPopup);
+function openPhotoHandle(evt, link, name) {
+  openPopup(popupPhoto);
   popupImage.src = link;
   popupImage.alt = name;
   popupCaption.textContent = name;
 }
 
+renderCards();
 
+// Добавление обработчиков
+
+// Обработчики событий на кнопки
+buttonEdit.addEventListener('click', handleEditFormClick);
+buttonAdd.addEventListener('click', handleAddFormClick);
+
+buttonEditClose.addEventListener('click', closeEditPopup);
+buttonAddClose.addEventListener('click', closeAddPopup);
+buttonPhotoClose.addEventListener('click', closePhotoPopup);
+
+// Обработчик кнопки Сохранить
+popupFormEdit.addEventListener('submit', editFormSubmitHandler);
+
+// Обработчик кнопки Добавить
+popupFormAdd.addEventListener('submit', addFormSubmitHandler);
