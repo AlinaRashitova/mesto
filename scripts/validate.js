@@ -31,12 +31,22 @@ function hasInvalidInput(inputList) {
 // Функция изменения класса у кнопки
 function toggleButtonState(inputList, buttonElement, config) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(config.inactiveButtonClass);
-    buttonElement.disabled = true;
+    getInactiveButtonState(buttonElement, config);
   } else {
-    buttonElement.classList.remove(config.inactiveButtonClass);
-    buttonElement.disabled = false;
+    getActiveButtonState(buttonElement, config);
   }
+}
+
+// Функция, делающая кнопку неактивной
+function getInactiveButtonState(buttonElement, config) {
+  buttonElement.classList.add(config.inactiveButtonClass);
+  buttonElement.disabled = true;
+}
+
+// Функция, делающая кнопку активной
+function getActiveButtonState(buttonElement, config) {
+  buttonElement.classList.remove(config.inactiveButtonClass);
+  buttonElement.disabled = false;
 }
 
 // Функция добавления слушателя событий всем инпутам формы

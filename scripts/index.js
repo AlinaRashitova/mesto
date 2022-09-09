@@ -11,6 +11,8 @@ const buttonAdd = document.querySelector('.profile__button_add');
 const buttonEditClose = popupEdit.querySelector('.popup__button_close');
 const buttonAddClose = popupAdd.querySelector('.popup__button_close');
 const buttonPhotoClose = popupPhoto.querySelector('.popup__button_close');
+const buttonSaveEdit = popupEdit.querySelector('.popup__button_save');
+const buttonSaveAdd = popupAdd.querySelector('.popup__button_save');
 
 // Формы
 const popupFormEdit = popupEdit.querySelector('.popup__form_type_edit');
@@ -57,10 +59,12 @@ function openPopup(popup) {
 function handleEditFormClick() {
   addPopupFormValue();
   openPopup(popupEdit);
+  getInactiveButtonState(buttonSaveEdit, validationConfig);
 }
 
 function handleAddFormClick() {
   openPopup(popupAdd);
+  getInactiveButtonState(buttonSaveAdd, validationConfig);
 }
 
 // Функция закрытия попапа
