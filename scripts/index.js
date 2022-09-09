@@ -59,12 +59,12 @@ function openPopup(popup) {
 function handleEditFormClick() {
   addPopupFormValue();
   openPopup(popupEdit);
-  getInactiveButtonState(buttonSaveEdit, validationConfig);
+  setActiveButtonState(buttonSaveEdit, validationConfig);
 }
 
 function handleAddFormClick() {
   openPopup(popupAdd);
-  getInactiveButtonState(buttonSaveAdd, validationConfig);
+  setInactiveButtonState(buttonSaveAdd, validationConfig);
 }
 
 // Функция закрытия попапа

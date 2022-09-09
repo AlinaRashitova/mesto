@@ -31,20 +31,20 @@ function hasInvalidInput(inputList) {
 // Функция изменения класса у кнопки
 function toggleButtonState(inputList, buttonElement, config) {
   if (hasInvalidInput(inputList)) {
-    getInactiveButtonState(buttonElement, config);
+    setInactiveButtonState(buttonElement, config);
   } else {
-    getActiveButtonState(buttonElement, config);
+    setActiveButtonState(buttonElement, config);
   }
 }
 
 // Функция, делающая кнопку неактивной
-function getInactiveButtonState(buttonElement, config) {
+function setInactiveButtonState(buttonElement, config) {
   buttonElement.classList.add(config.inactiveButtonClass);
   buttonElement.disabled = true;
 }
 
 // Функция, делающая кнопку активной
-function getActiveButtonState(buttonElement, config) {
+function setActiveButtonState(buttonElement, config) {
   buttonElement.classList.remove(config.inactiveButtonClass);
   buttonElement.disabled = false;
 }
