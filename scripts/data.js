@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
     name: 'Уфа',
     link: 'https://avatars.dzeninfra.ru/get-zen_doc/4034194/pub_60aa7b1db9ff4e00de83dfe8_60aa7c1fb0ca4f444ea572ba/scale_1200'
