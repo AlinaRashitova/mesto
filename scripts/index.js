@@ -1,6 +1,8 @@
-import { initialCards } from './data.js';
-import Card from './card.js';
-/*import FormValidator from './FormValidator.js';*/
+// Импорты
+
+import { initialCards } from "./data.js";
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 // Объявление переменных
 
@@ -13,8 +15,6 @@ const buttonEdit = document.querySelector('.profile__button_edit');
 const buttonAdd = document.querySelector('.profile__button_add');
 const buttonEditClose = popupEdit.querySelector('.popup__button_close');
 const buttonAddClose = popupAdd.querySelector('.popup__button_close');
-const buttonSaveEdit = popupEdit.querySelector('.popup__button_save');
-const buttonSaveAdd = popupAdd.querySelector('.popup__button_save');
 
 // Формы
 const popupFormEdit = popupEdit.querySelector('.popup__form_type_edit');
@@ -40,6 +40,12 @@ const validationConfig = {
   errorClass: 'error_visible'
 }
 
+const editFormValidator = new FormValidator(validationConfig, popupFormEdit);
+const addFormValidator = new FormValidator(validationConfig, popupFormAdd);
+
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
+
 // Объявление функций
 
 // Функция добавления значений в инпуты, попап редактирования
@@ -49,29 +55,29 @@ function addPopupFormValue() {
 }
 
 // Функция открытия попапа
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleCloseByEscape);
   popup.addEventListener('click', handleCloseByOverlay);
 }
 
+
 function handleEditFormClick() {
   addPopupFormValue();
   openPopup(popupEdit);
-  setActiveButtonState(buttonSaveEdit, validationConfig);
 }
 
 function handleAddFormClick() {
   openPopup(popupAdd);
-  setInactiveButtonState(buttonSaveAdd, validationConfig);
 }
 
 // Функция закрытия попапа
-function closePopup(popup) {
+export function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', handleCloseByEscape);
   popup.removeEventListener('click', handleCloseByOverlay);
 }
+
 
 function closeEditPopup() {
   closePopup(popupEdit);
@@ -118,15 +124,16 @@ function addFormSubmitHandler(evt) {
   popupFormAdd.reset();
 }
 
+// Функция создания карточки при помощи Card.js
 function createCard(object) {
   const newCard = new Card(object, '.template');
   return newCard.generateCard();
 }
 
+// Функция добавления карточки на страницу
 initialCards.forEach((item) => {
   const cardElement = createCard(item);
 
-  // Добавляем в DOM
   document.querySelector('.cards').prepend(cardElement);
 });
 

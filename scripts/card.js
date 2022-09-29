@@ -1,6 +1,9 @@
+import { openPopup, closePopup } from './index.js';
+
 const popupPhoto = document.querySelector('.popup_type_photo');
 const popupImage = document.querySelector('.popup__image');
 const popupCaption = document.querySelector('.popup__caption');
+const closeButton = popupPhoto.querySelector('.popup__button_close');
 
 export default class Card {
   constructor(object, templateSelector) {
@@ -11,10 +14,10 @@ export default class Card {
 
   _getTemplate() {
     const cardElement = document
-    .querySelector(this._templateSelector)
-    .content
-    .querySelector('.card')
-    .cloneNode(true);
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector('.card')
+      .cloneNode(true);
 
     return cardElement;
   }
@@ -23,7 +26,11 @@ export default class Card {
     popupImage.src = this._link;
     popupImage.alt = this._name;
     popupCaption.textContent = this._name;
-    popupPhoto.classList.add('popup_opened');
+    openPopup(popupPhoto);
+  }
+
+  _handleClosePopup() {
+    closePopup(popupPhoto);
   }
 
   _handleLikePopup() {
@@ -49,6 +56,10 @@ export default class Card {
 
     this._cardImage.addEventListener('click', () => {
       this._handleImagePopup();
+    });
+
+    closeButton.addEventListener('click', () => {
+      this._handleClosePopup();
     });
   }
 
