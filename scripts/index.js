@@ -9,12 +9,14 @@ import FormValidator from "./FormValidator.js";
 // Попапы
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_add');
+const popupPhoto = document.querySelector('.popup_type_photo');
 
 // Кнопки
 const buttonEdit = document.querySelector('.profile__button_edit');
 const buttonAdd = document.querySelector('.profile__button_add');
 const buttonEditClose = popupEdit.querySelector('.popup__button_close');
 const buttonAddClose = popupAdd.querySelector('.popup__button_close');
+const buttonPhotoClose = popupPhoto.querySelector('.popup__button_close');
 
 // Формы
 const popupFormEdit = popupEdit.querySelector('.popup__form_type_edit');
@@ -29,7 +31,9 @@ const imageSourceInput = popupFormAdd.querySelector('.popup__input_type_image-so
 // Другое
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__subtitle');
-const cardElement = document.querySelector('.cards');
+const cardsContainer = document.querySelector('.cards');
+const popupImage = document.querySelector('.popup__image');
+const popupCaption = document.querySelector('.popup__caption');
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -40,11 +44,11 @@ const validationConfig = {
   errorClass: 'error_visible'
 }
 
-const editFormValidator = new FormValidator(validationConfig, popupFormEdit);
-const addFormValidator = new FormValidator(validationConfig, popupFormAdd);
+const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
+const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
 
-editFormValidator.enableValidation();
-addFormValidator.enableValidation();
+formEditValidator.enableValidation();
+formAddValidator.enableValidation();
 
 // Объявление функций
 
@@ -57,10 +61,9 @@ function addPopupFormValue() {
 // Функция открытия попапа
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', handleCloseByEscape);
-  popup.addEventListener('click', handleCloseByOverlay);
+  document.addEventListener('keydown', closeByEscapeHandler);
+  popup.addEventListener('click', closeByOverlayHandler);
 }
-
 
 function handleEditFormClick() {
   addPopupFormValue();
@@ -74,8 +77,8 @@ function handleAddFormClick() {
 // Функция закрытия попапа
 export function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', handleCloseByEscape);
-  popup.removeEventListener('click', handleCloseByOverlay);
+  document.removeEventListener('keydown', closeByEscapeHandler);
+  popup.removeEventListener('click', closeByOverlayHandler);
 }
 
 
@@ -87,8 +90,12 @@ function closeAddPopup() {
   closePopup(popupAdd);
 }
 
+function closePhotoPopup() {
+  closePopup(popupPhoto);
+}
+
 // Функция закрытия попапа через Esc
-function handleCloseByEscape(evt) {
+function closeByEscapeHandler(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup);
@@ -96,7 +103,7 @@ function handleCloseByEscape(evt) {
 }
 
 // Функция закрытия попапа кликом на оверлей
-function handleCloseByOverlay(evt) {
+function closeByOverlayHandler(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
   }
@@ -119,14 +126,21 @@ function addFormSubmitHandler(evt) {
     name: title,
     link: image
   }
-  cardElement.prepend(createCard(objectCard));
+  cardsContainer.prepend(createCard(objectCard));
   closeAddPopup();
   popupFormAdd.reset();
 }
 
+function openPopupHandler(name, link) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupCaption.textContent = name;
+  openPopup(popupPhoto);
+}
+
 // Функция создания карточки при помощи Card.js
 function createCard(object) {
-  const newCard = new Card(object, '.template');
+  const newCard = new Card(object, '.template', openPopupHandler);
   return newCard.generateCard();
 }
 
@@ -134,7 +148,7 @@ function createCard(object) {
 initialCards.forEach((item) => {
   const cardElement = createCard(item);
 
-  document.querySelector('.cards').prepend(cardElement);
+  cardsContainer.prepend(cardElement);
 });
 
 // Добавление обработчиков
@@ -145,6 +159,7 @@ buttonAdd.addEventListener('click', handleAddFormClick);
 
 buttonEditClose.addEventListener('click', closeEditPopup);
 buttonAddClose.addEventListener('click', closeAddPopup);
+buttonPhotoClose.addEventListener('click', closePhotoPopup)
 
 // Обработчик кнопки Сохранить
 popupFormEdit.addEventListener('submit', editFormSubmitHandler);
