@@ -1,5 +1,4 @@
 // Импорты
-
 import { initialCards } from "./data.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
@@ -68,10 +67,12 @@ export function openPopup(popup) {
 function handleEditFormClick() {
   addPopupFormValue();
   openPopup(popupEdit);
+  formEditValidator.resetValidation();
 }
 
 function handleAddFormClick() {
   openPopup(popupAdd);
+  formAddValidator.resetValidation();
 }
 
 // Функция закрытия попапа
