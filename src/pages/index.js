@@ -17,8 +17,22 @@ import {validationConfig,
         jobInput } from "../utils/constants.js";
 
 function createCard(object) {
-  const newCard = new Card(object, '.template', imagePopup.open.bind(imagePopup));
+  const newCard = new Card(
+    {name: object.name, link: object.link},
+    '.template',
+    imagePopup.open.bind(imagePopup));
   return newCard.generateCard();
+}
+
+const editFormSubmitHandler = (formValues) => {
+  userInfo.setUserInfo(formValues.nameInput, formValues.jobInput);
+  popupEdit.close();
+}
+
+const addFormSubmitHandler = () => {
+  cardSection.addItem(createCard({name: placeNameInput.value, link: imageSourceInput.value}));
+  popupAdd.close();
+  popupFormAdd.reset();
 }
 
 const imagePopup = new PopupWithImage(".popup_type_photo");
@@ -35,17 +49,6 @@ const cardSection = new Section(
   },
   ".cards"
 );
-
-const editFormSubmitHandler = () => {
-  userInfo.setUserInfo();
-  popupEdit.close();
-}
-
-const addFormSubmitHandler = () => {
-  cardSection.addItem(createCard({name: placeNameInput.value, link: imageSourceInput.value}));
-  popupAdd.close();
-  popupFormAdd.reset();
-}
 
 buttonEdit.addEventListener('click', () => {
   popupEdit.open();
