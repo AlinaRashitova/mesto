@@ -4,7 +4,7 @@
   font-weight: 400;
   font-display: swap;
   src: url("../vendor/inter_regular.woff2") format("woff2"),
-    url("../vendor/inter_regular.woffs") format("woff");
+    url("../vendor/inter_regular.woff") format("woff");
 }
 
 @font-face {
