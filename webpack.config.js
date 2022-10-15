@@ -11,7 +11,6 @@ module.exports = {
     publicPath: ''
   },
   mode: 'development',
-  devtool: 'source-map',
   devServer: {
     static: path.resolve(__dirname, './dist'),
     compress: true,
@@ -33,8 +32,8 @@ module.exports = {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, {
            loader: 'css-loader',
-          options: {
-           importLoaders: 1
+           options: {
+            importLoaders: 1
           }
         },
         'postcss-loader'
