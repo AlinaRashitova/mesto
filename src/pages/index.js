@@ -7,8 +7,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import {validationConfig,
-        placeNameInput,
-        imageSourceInput,
         popupFormAdd,
         popupFormEdit,
         buttonEdit,
@@ -49,7 +47,7 @@ const userInfo = new UserInfo(".profile__title", ".profile__subtitle");
 const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
 const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
 
-function clickEditButtonHandler() {
+function handleEditProfileButtonClick() {
   popupEdit.open();
   const userInfoObj = userInfo.getUserInfo();
   nameInput.value = userInfoObj.name;
@@ -57,13 +55,13 @@ function clickEditButtonHandler() {
   formEditValidator.resetValidation();
 }
 
-function clickAddButtonHandler() {
+function handleAddCardButtonClick() {
   popupAdd.open();
   formAddValidator.resetValidation();
 }
 
-buttonEdit.addEventListener('click', clickEditButtonHandler);
-buttonAdd.addEventListener('click', clickAddButtonHandler);
+buttonEdit.addEventListener('click', handleEditProfileButtonClick);
+buttonAdd.addEventListener('click', handleAddCardButtonClick);
 
 imagePopup.setEventListeners();
 popupEdit.setEventListeners();

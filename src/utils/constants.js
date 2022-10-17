@@ -2,8 +2,6 @@ export const popupFormAdd = document.querySelector('.popup__form_type_add');
 export const popupFormEdit = document.querySelector('.popup__form_type_edit');
 export const nameInput = popupFormEdit.querySelector('.popup__input_type_name');
 export const jobInput = popupFormEdit.querySelector('.popup__input_type_job');
-export const placeNameInput = popupFormAdd.querySelector('.popup__input_type_place-name');
-export const imageSourceInput = popupFormAdd.querySelector('.popup__input_type_image-source');
 export const buttonEdit = document.querySelector('.profile__button_edit');
 export const buttonAdd = document.querySelector('.profile__button_add');
 
