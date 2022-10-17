@@ -16,31 +16,13 @@ import {validationConfig,
         nameInput,
         jobInput } from "../utils/constants.js";
 
-function createCard(object) {
+function createCard(cardData) {
   const newCard = new Card(
-    {name: object.name, link: object.link},
+    {name: cardData.name, link: cardData.link},
     '.template',
     imagePopup.open.bind(imagePopup));
   return newCard.generateCard();
 }
-
-const editFormSubmitHandler = (formValues) => {
-  userInfo.setUserInfo(formValues.nameInput, formValues.jobInput);
-  popupEdit.close();
-}
-
-const addFormSubmitHandler = () => {
-  cardSection.addItem(createCard({name: placeNameInput.value, link: imageSourceInput.value}));
-  popupAdd.close();
-  popupFormAdd.reset();
-}
-
-const imagePopup = new PopupWithImage(".popup_type_photo");
-const popupEdit = new PopupWithForm(".popup_type_edit", editFormSubmitHandler);
-const popupAdd = new PopupWithForm(".popup_type_add", addFormSubmitHandler);
-const userInfo = new UserInfo(".profile__title", ".profile__subtitle");
-const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
-const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
 
 const cardSection = new Section(
   {
@@ -50,18 +32,38 @@ const cardSection = new Section(
   ".cards"
 );
 
-buttonEdit.addEventListener('click', () => {
+const handleProfileFormSubmit = (formValues) => {
+  userInfo.setUserInfo(formValues.nameInput, formValues.jobInput);
+  popupEdit.close();
+}
+
+const handleCardFormSubmit = (formValues) => {
+  cardSection.addItem(createCard(formValues));
+  popupAdd.close();
+}
+
+const imagePopup = new PopupWithImage(".popup_type_photo");
+const popupEdit = new PopupWithForm(".popup_type_edit", handleProfileFormSubmit);
+const popupAdd = new PopupWithForm(".popup_type_add", handleCardFormSubmit);
+const userInfo = new UserInfo(".profile__title", ".profile__subtitle");
+const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
+const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
+
+function clickEditButtonHandler() {
   popupEdit.open();
   const userInfoObj = userInfo.getUserInfo();
   nameInput.value = userInfoObj.name;
   jobInput.value = userInfoObj.info;
   formEditValidator.resetValidation();
-});
+}
 
-buttonAdd.addEventListener('click', () => {
+function clickAddButtonHandler() {
   popupAdd.open();
   formAddValidator.resetValidation();
-})
+}
+
+buttonEdit.addEventListener('click', clickEditButtonHandler);
+buttonAdd.addEventListener('click', clickAddButtonHandler);
 
 imagePopup.setEventListeners();
 popupEdit.setEventListeners();
