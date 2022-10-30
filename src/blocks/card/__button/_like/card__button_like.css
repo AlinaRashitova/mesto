@@ -4,7 +4,7 @@
   background-image: url(../../../../images/like-button.svg);
   background-repeat: no-repeat;
   background-position: center;
-  max-width: 22px;
+  min-width: 22px;
   min-height: 19px;
   width: 100%;
   margin: 5px 0 0;
