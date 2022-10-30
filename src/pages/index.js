@@ -30,7 +30,7 @@ const api = new Api({
 const userInfo = new UserInfo({
   nameSelector: '.profile__title',
   infoSelector: '.profile__subtitle',
-  avatarSelector: '.profile__avatar'
+  avatarSelector: '.profile__avatar-image'
 });
 
 // Функция создания карточки
@@ -75,7 +75,7 @@ const handleAvatarFormSubmit = formValues =>
 const imagePopup = new PopupWithImage(".popup_type_photo");
 const popupEdit = new PopupWithForm(".popup_type_edit", handleProfileFormSubmit);
 const popupAdd = new PopupWithForm(".popup_type_add", handleCardFormSubmit);
-const popupAvatar = new PopupWithForm(".popup_type_change_avatar", handleAvatarFormSubmit);
+const popupAvatar = new PopupWithForm(".popup_type_change-avatar", handleAvatarFormSubmit);
 const popupConfirm = new PopupWithConfirmation(".popup_type_confirm");
 const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
 const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
