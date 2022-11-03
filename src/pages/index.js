@@ -15,7 +15,8 @@ import {
   buttonAdd,
   nameInput,
   jobInput,
-  profileAvatar
+  profileAvatar,
+  profileAvatarImage
 } from "../utils/constants.js";
 import Api from "../components/Api.js";
 
@@ -33,19 +34,42 @@ const userInfo = new UserInfo({
   avatarSelector: '.profile__avatar-image'
 });
 
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData)
+    userInfo.setUserId(userData)
+    cardSection.renderItems(cards)
+  })
+  .catch(err => console.log(`${err}`))
+
 // Функция создания карточки
 function createCard(cardData) {
   const newCard = new Card(
     cardData,
     '.template',
     imagePopup.open.bind(imagePopup),
-    userInfo,
-    cardId => api.putLike(cardId).catch(err => console.log(`Ошибка: ${err}`)),
-    cardId => api.deleteLike(cardId).catch(err => console.log(`Ошибка: ${err}`)),
-    cardId => api.deleteCard(cardId).catch(err => console.log(`Ошибка: ${err}`)),
-    (handleDeleteCardConfirmation) => popupConfirm.open(handleDeleteCardConfirmation)
+    userInfo.getUserId.bind(userInfo),
+    handlePutLike,
+    handleDeleteLike,
+    handleDeleteClick
   );
   return newCard.generateCard();
+}
+
+function handlePutLike(cardId, card) {
+  api.putLike(cardId).then((res) => {
+    card.countLikes(res)
+    card.toggleLike()
+  })
+    .catch(err => console.log(`${err}`))
+}
+
+function handleDeleteLike(cardId, card) {
+  api.deleteLike(cardId).then((res) => {
+    card.countLikes(res)
+    card.toggleLike()
+  })
+    .catch(err => console.log(`${err}`))
 }
 
 // Экземпляр класса Section
@@ -53,24 +77,27 @@ const cardSection = new Section((item) => cardSection.addItem(createCard(item)),
 
 const handleProfileFormSubmit = formValues =>
   api.editProfile(formValues.nameInput, formValues.jobInput).then(res => {
-    userInfo.setUserInfo(res.name, res.about);
+    userInfo.setUserInfo(res);
     popupEdit.close();
   })
-    .catch(err => console.log(`Ошибка: ${err}`))
+    .catch(err => console.log(`${err}`))
+    .finally(() => popupEdit.isLoading(false))
 
 const handleCardFormSubmit = formValues =>
   api.addCard(formValues.name, formValues.link).then(res => {
     cardSection.addItem(createCard(res));
     popupAdd.close();
   })
-    .catch(err => console.log(`Ошибка: ${err}`))
+    .catch(err => console.log(`${err}`))
+    .finally(() => popupAdd.isLoading(false))
 
 const handleAvatarFormSubmit = formValues =>
   api.changeAvatar(formValues.link).then(res => {
-    profileAvatar.src = res.avatar;
+    profileAvatarImage.src = res.avatar;
     popupAvatar.close();
   })
-    .catch(err => console.log(`Ошибка: ${err}`))
+    .catch(err => console.log(`${err}`))
+    .finally(() => popupAvatar.isLoading(false))
 
 const imagePopup = new PopupWithImage(".popup_type_photo");
 const popupEdit = new PopupWithForm(".popup_type_edit", handleProfileFormSubmit);
@@ -81,13 +108,17 @@ const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
 const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
 const formAvatarValidator = new FormValidator(validationConfig, popupFormAvatar);
 
-api.getUserInfo().then(res => {
-  userInfo.setUserInfo(res.name, res.about, res.avatar);
-})
+function handleDeleteClick(card) {
+  popupConfirm.open(() => handleConfirmClick(card));
+}
 
-api.getInitialCards().then(res => {
-  cardSection.renderItems(res);
-})
+function handleConfirmClick(card) {
+  api.deleteCard(card.getCardId()).then(() => {
+    card.deleteCard()
+    popupConfirm.close()
+  })
+    .catch(err => console.log(`${err}`))
+}
 
 function handleEditProfileButtonClick() {
   popupEdit.open();
