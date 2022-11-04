@@ -58,16 +58,14 @@ function createCard(cardData) {
 
 function handlePutLike(cardId, card) {
   api.putLike(cardId).then((res) => {
-    card.countLikes(res)
-    card.toggleLike()
+    card.changeLikes(res)
   })
     .catch(err => console.log(`${err}`))
 }
 
 function handleDeleteLike(cardId, card) {
   api.deleteLike(cardId).then((res) => {
-    card.countLikes(res)
-    card.toggleLike()
+    card.changeLikes(res)
   })
     .catch(err => console.log(`${err}`))
 }
@@ -103,13 +101,13 @@ const imagePopup = new PopupWithImage(".popup_type_photo");
 const popupEdit = new PopupWithForm(".popup_type_edit", handleProfileFormSubmit);
 const popupAdd = new PopupWithForm(".popup_type_add", handleCardFormSubmit);
 const popupAvatar = new PopupWithForm(".popup_type_change-avatar", handleAvatarFormSubmit);
-const popupConfirm = new PopupWithConfirmation(".popup_type_confirm");
+const popupConfirm = new PopupWithConfirmation(".popup_type_confirm", handleConfirmClick);
 const formEditValidator = new FormValidator(validationConfig, popupFormEdit);
 const formAddValidator = new FormValidator(validationConfig, popupFormAdd);
 const formAvatarValidator = new FormValidator(validationConfig, popupFormAvatar);
 
 function handleDeleteClick(card) {
-  popupConfirm.open(() => handleConfirmClick(card));
+  popupConfirm.open(card);
 }
 
 function handleConfirmClick(card) {

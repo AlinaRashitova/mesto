@@ -64,6 +64,16 @@ export default class Card {
     }
   }
 
+  changeLikes(card) {
+    this._cardLikes.textContent = card.likes.length;
+    this._likeButton.classList.toggle('card__button_like_active');
+  }
+
+  deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
+
   _setEventListeners() {
     this._likeButton.addEventListener('click', () => {
       this._handleLikeClick();
@@ -76,19 +86,6 @@ export default class Card {
     this._cardImage.addEventListener('click', () => {
       this._handleImageClick();
     });
-  }
-
-  countLikes(card) {
-    this._cardLikes.textContent = card.likes.length;
-  }
-
-  toggleLike() {
-    this._likeButton.classList.toggle('card__button_like_active');
-  }
-
-  deleteCard() {
-    this._element.remove();
-    this._element = null;
   }
 
   getCardId() {
