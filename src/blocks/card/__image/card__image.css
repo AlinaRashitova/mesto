@@ -1,9 +1,9 @@
 .card__image {
   object-fit: cover;
   max-width: 282px;
-  max-height: 282px;
+  min-height: 282px;
   width: 100%;
-  height: 100%;
+  height: 80%;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
